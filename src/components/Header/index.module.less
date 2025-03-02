@@ -1,14 +1,24 @@
 .headerWarp {
-	height: 60px;
-	background-color: red;
+	box-sizing: border-box;
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 16px;
+	-webkit-app-region: drag;
 }
 
 .title {
-	font-size: 20px;
-	color: #fff;
+	font-size: 16px;
+	color: #000;
+	font-weight: bold;
 }
 
 .tools {
 	display: flex;
 	gap: 8px;
+}
+
+.windowButton {
+	-webkit-app-region: no-drag;
 }
