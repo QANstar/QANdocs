@@ -1,9 +1,15 @@
+import Content from '../../components/Contetnt';
 import Header from '../../components/Header';
 
 const Home = () => {
 	return (
 		<div>
-			<Header />
+			<header>
+				<Header />
+			</header>
+			<main>
+				<Content />
+			</main>
 		</div>
 	);
 };
