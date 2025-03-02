@@ -1,14 +1,18 @@
 import { EditorProvider } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Markdown } from 'tiptap-markdown';
+import Placeholder from '@tiptap/extension-placeholder';
+import i18n from '../../i18n';
 
-const extensions = [StarterKit, Markdown];
+const extensions = [
+	StarterKit,
+	Markdown,
+	Placeholder.configure({
+		placeholder: i18n.t('editor.placeholder'),
+	}),
+];
 
-const content = `
-<h2>
-  hello QANdocs,
-</h2>
-`;
+const content = '';
 
 const Editor = () => {
 	return <EditorProvider extensions={extensions} content={content} />;

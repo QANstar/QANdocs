@@ -1,5 +1,8 @@
 {
 	"header": {
 		"defaultTitle": "未命名文件"
+	},
+	"editor": {
+		"placeholder": "请输入内容"
 	}
 }
