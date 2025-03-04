@@ -2,8 +2,9 @@ import { useAtom } from 'jotai';
 import styles from './index.module.less';
 import { fileNameAtom } from '../../store/file';
 import { MinusOutlined, BorderOutlined, CloseOutlined, SettingOutlined, MenuOutlined } from '@ant-design/icons';
-import { Button, Divider } from 'antd';
+import { Button, Divider, Dropdown } from 'antd';
 import useWindowControl from '../../core/frame/useWindowControl';
+import items from './Menu';
 
 const Header = () => {
 	const [fileName] = useAtom(fileNameAtom);
@@ -12,7 +13,9 @@ const Header = () => {
 	return (
 		<div className={styles.headerWarp}>
 			<div className={styles.left}>
-				<Button type="text" icon={<MenuOutlined />} className={styles.windowButton} />
+				<Dropdown trigger={['click']} menu={{ items }}>
+					<Button type="text" icon={<MenuOutlined />} className={styles.windowButton} />
+				</Dropdown>
 				<div className={styles.title}>{fileName}</div>
 			</div>
 

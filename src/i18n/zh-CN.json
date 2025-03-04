@@ -1,6 +1,11 @@
 {
 	"header": {
-		"defaultTitle": "未命名文件"
+		"defaultTitle": "未命名文件",
+		"menu": {
+			"save": "保存",
+			"saveAs": "另存为",
+			"open": "打开"
+		}
 	},
 	"editor": {
 		"placeholder": "请输入内容"
