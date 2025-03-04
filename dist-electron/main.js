@@ -1,7 +1,8 @@
-import { ipcMain, BrowserWindow, app } from "electron";
+import { ipcMain, BrowserWindow, dialog, app } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import fs from "node:fs/promises";
 const setupFrameExtension = () => {
   ipcMain.on("window-minimize", () => {
     const win2 = BrowserWindow.getFocusedWindow();
@@ -23,6 +24,30 @@ const setupFrameExtension = () => {
     const win2 = BrowserWindow.getFocusedWindow();
     if (win2) {
       win2.close();
+    }
+  });
+};
+const setupFileExtension = () => {
+  ipcMain.handle("save-document", async (_, args) => {
+    const { defaultPath, fileData } = args;
+    try {
+      const { canceled, filePath } = await dialog.showSaveDialog({
+        defaultPath,
+        filters: [{ name: "QANdocs", extensions: ["qandocs"] }],
+        properties: ["createDirectory"]
+      });
+      if (canceled || !filePath) {
+        return { success: false };
+      }
+      const finalPath = filePath.endsWith(".qandocs") ? filePath : `${filePath}.qandocs`;
+      await fs.writeFile(finalPath, fileData, "utf-8");
+      return {
+        success: true,
+        fileName: path.basename(finalPath)
+      };
+    } catch (error) {
+      console.error("保存文件失败:", error);
+      return { success: false, error: String(error) };
     }
   });
 };
@@ -68,6 +93,7 @@ app.on("activate", () => {
 app.whenReady().then(() => {
   createWindow();
   setupFrameExtension();
+  setupFileExtension();
 });
 export {
   MAIN_DIST,

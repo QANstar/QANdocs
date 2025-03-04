@@ -26,5 +26,6 @@ interface Window {
 	ipcRenderer: import('electron').IpcRenderer;
 	electronAPI: {
 		frame: import('./type').IFrameApi;
+		file: import('./type').IFileApi;
 	};
 }

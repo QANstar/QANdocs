@@ -1,5 +1,6 @@
 import { ipcRenderer, contextBridge } from 'electron';
 import frame from './extension/frame/render';
+import file from './extension/file/render';
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -26,4 +27,5 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
 contextBridge.exposeInMainWorld('electronAPI', {
 	frame,
+	file,
 });

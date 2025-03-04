@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import setupFrameExtension from './extension/frame/client';
+import setupFileExtension from './extension/file/client';
 
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -74,4 +75,5 @@ app.on('activate', () => {
 app.whenReady().then(() => {
 	createWindow();
 	setupFrameExtension();
+	setupFileExtension();
 });
