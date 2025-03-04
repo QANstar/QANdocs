@@ -6,7 +6,11 @@ import i18n from '../../i18n';
 
 const extensions = [
 	StarterKit,
-	Markdown,
+	Markdown.configure({
+		html: false,
+		transformPastedText: true,
+		transformCopiedText: true,
+	}),
 	Placeholder.configure({
 		placeholder: i18n.t('editor.placeholder'),
 	}),
