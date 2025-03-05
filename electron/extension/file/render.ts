@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { IFileApi, IFileSaveAsOptions } from '../../type';
+import { IFileApi, IFileSaveAsOptions, IFileSaveOptions } from '../../type';
 import { fileSuffix } from '../../../share/config';
 
 const frameApi: IFileApi = {
@@ -8,6 +8,13 @@ const frameApi: IFileApi = {
 		const { defaultPath, fileData, fileName } = options;
 		return await ipcRenderer.invoke('saveas-document', {
 			defaultPath: defaultPath || `${fileName}.${fileSuffix}`,
+			fileData: JSON.stringify(fileData),
+		});
+	},
+	save: async (options: IFileSaveOptions) => {
+		const { fileData, path } = options;
+		return await ipcRenderer.invoke('save-document', {
+			path,
 			fileData: JSON.stringify(fileData),
 		});
 	},

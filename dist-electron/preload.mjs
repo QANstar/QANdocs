@@ -23,6 +23,13 @@ const frameApi = {
       defaultPath: defaultPath || `${fileName}.${fileSuffix}`,
       fileData: JSON.stringify(fileData)
     });
+  },
+  save: async (options) => {
+    const { fileData, path } = options;
+    return await electron.ipcRenderer.invoke("save-document", {
+      path,
+      fileData: JSON.stringify(fileData)
+    });
   }
 };
 electron.contextBridge.exposeInMainWorld("ipcRenderer", {

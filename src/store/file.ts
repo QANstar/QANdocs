@@ -3,4 +3,6 @@ import i18n from '../i18n';
 
 const fileNameAtom = atom(i18n.t('header.defaultTitle'));
 
-export { fileNameAtom };
+const filePathAtom = atom('');
+
+export { fileNameAtom, filePathAtom };

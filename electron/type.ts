@@ -7,6 +7,7 @@ export interface IFrameApi {
 export interface IFileSaveAsResult {
 	success: boolean;
 	fileName: string;
+	path: string;
 	error: string;
 }
 
@@ -16,6 +17,17 @@ export interface IFileSaveAsOptions {
 	fileName: string;
 }
 
+export interface IFileSaveResult {
+	success: boolean;
+	error?: string;
+}
+
+export interface IFileSaveOptions {
+	path: string;
+	fileData: string;
+}
+
 export interface IFileApi {
 	saveAs: (options: IFileSaveAsOptions) => Promise<IFileSaveAsResult>;
+	save: (options: IFileSaveOptions) => Promise<IFileSaveResult>;
 }

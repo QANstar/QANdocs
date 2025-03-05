@@ -44,7 +44,8 @@ const setupFileExtension = () => {
       await fs.writeFile(finalPath, fileData, "utf-8");
       return {
         success: true,
-        fileName: path.basename(finalPath)
+        fileName: path.basename(finalPath),
+        path: finalPath
       };
     } catch (error) {
       console.error("保存文件失败:", error);
@@ -52,21 +53,12 @@ const setupFileExtension = () => {
     }
   });
   ipcMain.handle("save-document", async (_, args) => {
-    const { defaultPath, fileData } = args;
+    const { path: pathName, fileData } = args;
     try {
-      const { canceled, filePath } = await dialog.showSaveDialog({
-        defaultPath,
-        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
-        properties: ["createDirectory"]
-      });
-      if (canceled || !filePath) {
-        return { success: false };
-      }
-      const finalPath = filePath.endsWith(".qandocs") ? filePath : `${filePath}.qandocs`;
+      const finalPath = pathName.endsWith(`.${fileSuffix}`) ? pathName : `${path.basename(pathName)}.${fileSuffix}`;
       await fs.writeFile(finalPath, fileData, "utf-8");
       return {
-        success: true,
-        fileName: path.basename(finalPath)
+        success: true
       };
     } catch (error) {
       console.error("保存文件失败:", error);
