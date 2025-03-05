@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { Editor } from '@tiptap/react';
 import { fileNameAtom, filePathAtom } from '../../store/file';
 import { useAtom } from 'jotai';
-import { fileSuffix } from '../../../share/config';
 import { ISaveData } from '../../types/file';
 import { getFileNameWithoutSuffix } from '../../utils/file';
 
