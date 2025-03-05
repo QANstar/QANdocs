@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { Editor } from '@tiptap/react';
 import { fileNameAtom } from '../../store/file';
 import { useAtom } from 'jotai';
+import { fileSuffix } from '../../../share/config';
 
 interface SaveAsOptions {
 	editor: Editor | null;
@@ -46,7 +47,7 @@ const useSaveAs = () => {
 
 				if (result.success) {
 					// 更新文件名状态
-					const newFileName = result.fileName.split(/[/\\]/).pop()?.replace('.qandocs', '') || fileName;
+					const newFileName = result.fileName.split(/[/\\]/).pop()?.replace(`.${fileSuffix}`, '') || fileName;
 					setFileName(newFileName);
 					return true;
 				}

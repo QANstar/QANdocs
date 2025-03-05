@@ -14,12 +14,13 @@ const frameApi$1 = {
     electron.ipcRenderer.send("window-close");
   }
 };
+const fileSuffix = "qd";
 const frameApi = {
   // 另存为
   saveAs: async (options) => {
     const { defaultPath, fileData, fileName } = options;
-    return await electron.ipcRenderer.invoke("save-document", {
-      defaultPath: defaultPath || `${fileName}.qandocs`,
+    return await electron.ipcRenderer.invoke("saveas-document", {
+      defaultPath: defaultPath || `${fileName}.${fileSuffix}`,
       fileData: JSON.stringify(fileData)
     });
   }

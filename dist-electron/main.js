@@ -27,13 +27,36 @@ const setupFrameExtension = () => {
     }
   });
 };
+const fileSuffix = "qd";
 const setupFileExtension = () => {
+  ipcMain.handle("saveas-document", async (_, args) => {
+    const { defaultPath, fileData } = args;
+    try {
+      const { canceled, filePath } = await dialog.showSaveDialog({
+        defaultPath,
+        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
+        properties: ["createDirectory"]
+      });
+      if (canceled || !filePath) {
+        return { success: false };
+      }
+      const finalPath = filePath.endsWith(`.${fileSuffix}`) ? filePath : `${filePath}.${fileSuffix}`;
+      await fs.writeFile(finalPath, fileData, "utf-8");
+      return {
+        success: true,
+        fileName: path.basename(finalPath)
+      };
+    } catch (error) {
+      console.error("保存文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
   ipcMain.handle("save-document", async (_, args) => {
     const { defaultPath, fileData } = args;
     try {
       const { canceled, filePath } = await dialog.showSaveDialog({
         defaultPath,
-        filters: [{ name: "QANdocs", extensions: ["qandocs"] }],
+        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
         properties: ["createDirectory"]
       });
       if (canceled || !filePath) {
