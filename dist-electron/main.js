@@ -65,6 +65,28 @@ const setupFileExtension = () => {
       return { success: false, error: String(error) };
     }
   });
+  ipcMain.handle("open-document", async () => {
+    try {
+      const { canceled, filePaths } = await dialog.showOpenDialog({
+        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
+        properties: ["openFile"]
+      });
+      if (canceled || filePaths.length === 0) {
+        return { success: false };
+      }
+      const filePath = filePaths[0];
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      return {
+        path: filePath,
+        fileName: path.basename(filePath),
+        success: true,
+        fileData: fileContent
+      };
+    } catch (error) {
+      console.error("打开文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
 };
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

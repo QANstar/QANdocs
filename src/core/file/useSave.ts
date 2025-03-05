@@ -3,6 +3,8 @@ import { Editor } from '@tiptap/react';
 import { fileNameAtom, filePathAtom } from '../../store/file';
 import { useAtom } from 'jotai';
 import { fileSuffix } from '../../../share/config';
+import { ISaveData } from '../../types/file';
+import { getFileNameWithoutSuffix } from '../../utils/file';
 
 interface SaveAsOptions {
 	editor: Editor | null;
@@ -16,17 +18,17 @@ interface SaveOptions {
 /**
  * 提供将编辑器内容另存为.qandocs文件的功能
  */
-const useSaveAs = () => {
+const useSave = () => {
 	const [fileName, setFileName] = useAtom(fileNameAtom);
 	const [filePath, setFilePath] = useAtom(filePathAtom);
 
 	const getSaveData = useCallback((editor: Editor) => {
 		// 获取编辑器内容
-		const content = editor.getHTML();
+		const content = editor.getJSON();
 		const markdown = editor.storage.markdown?.getMarkdown() || '';
 
 		// 准备保存的数据
-		const fileData = {
+		const fileData: ISaveData = {
 			content,
 			markdown,
 			version: '1.0.0', // 文件版本
@@ -59,7 +61,7 @@ const useSaveAs = () => {
 
 				if (result.success) {
 					// 更新文件名状态
-					const newFileName = result.fileName.split(/[/\\]/).pop()?.replace(`.${fileSuffix}`, '') || fileName;
+					const newFileName = getFileNameWithoutSuffix(result.fileName || fileName);
 					setFileName(newFileName);
 					setFilePath(result.path);
 					return true;
@@ -100,7 +102,18 @@ const useSaveAs = () => {
 		[filePath, getSaveData, saveAs]
 	);
 
-	return { saveAs, save };
+	const open = useCallback(async () => {
+		const result = await window.electronAPI.file.open();
+		const newFileName = getFileNameWithoutSuffix(result.fileName || fileName);
+		setFileName(newFileName);
+		if (result.path) setFilePath(result.path);
+		if (result.success && result.fileData) {
+			return JSON.parse(result.fileData);
+		}
+		return '';
+	}, [fileName, setFileName, setFilePath]);
+
+	return { saveAs, save, open };
 };
 
-export default useSaveAs;
+export default useSave;

@@ -1,12 +1,12 @@
 import i18n from '../../../../i18n';
 import styles from '../index.module.less';
-import useSaveAs from '../../../../core/file/useSaveAs';
+import useSave from '../../../../core/file/useSave';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../../store';
 
 const SaveAsMenuItem = () => {
 	const [editor] = useAtom(editorAtom);
-	const { saveAs } = useSaveAs();
+	const { saveAs } = useSave();
 
 	const onSaveAsClick = () => {
 		saveAs({ editor });

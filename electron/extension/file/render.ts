@@ -18,6 +18,9 @@ const frameApi: IFileApi = {
 			fileData: JSON.stringify(fileData),
 		});
 	},
+	open: async () => {
+		return await ipcRenderer.invoke('open-document');
+	},
 };
 
 // 窗口控制相关功能

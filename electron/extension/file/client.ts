@@ -2,7 +2,7 @@ import { dialog, ipcMain } from 'electron';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileSuffix } from '../../../share/config';
-import { IFileSaveOptions, IFileSaveResult } from '../../type';
+import { IFileOpenResult, IFileSaveOptions, IFileSaveResult } from '../../type';
 
 const setupFileExtension = () => {
 	ipcMain.handle('saveas-document', async (_, args) => {
@@ -51,6 +51,36 @@ const setupFileExtension = () => {
 			};
 		} catch (error) {
 			console.error('保存文件失败:', error);
+			return { success: false, error: String(error) };
+		}
+	});
+
+	ipcMain.handle('open-document', async (): Promise<IFileOpenResult> => {
+		try {
+			// 打开文件选择对话框
+			const { canceled, filePaths } = await dialog.showOpenDialog({
+				filters: [{ name: 'QANdocs', extensions: [fileSuffix] }],
+				properties: ['openFile'],
+			});
+
+			if (canceled || filePaths.length === 0) {
+				return { success: false };
+			}
+
+			// 获取选择的文件路径
+			const filePath = filePaths[0];
+
+			// 读取文件内容
+			const fileContent = await fs.readFile(filePath, 'utf-8');
+
+			return {
+				path: filePath,
+				fileName: path.basename(filePath),
+				success: true,
+				fileData: fileContent,
+			};
+		} catch (error) {
+			console.error('打开文件失败:', error);
 			return { success: false, error: String(error) };
 		}
 	});

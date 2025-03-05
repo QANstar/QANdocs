@@ -27,7 +27,16 @@ export interface IFileSaveOptions {
 	fileData: string;
 }
 
+export interface IFileOpenResult {
+	success: boolean;
+	fileData?: string;
+	path?: string;
+	fileName?: string;
+	error?: string;
+}
+
 export interface IFileApi {
 	saveAs: (options: IFileSaveAsOptions) => Promise<IFileSaveAsResult>;
 	save: (options: IFileSaveOptions) => Promise<IFileSaveResult>;
+	open: () => Promise<IFileOpenResult>;
 }

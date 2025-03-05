@@ -30,6 +30,9 @@ const frameApi = {
       path,
       fileData: JSON.stringify(fileData)
     });
+  },
+  open: async () => {
+    return await electron.ipcRenderer.invoke("open-document");
   }
 };
 electron.contextBridge.exposeInMainWorld("ipcRenderer", {

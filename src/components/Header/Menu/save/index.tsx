@@ -2,11 +2,11 @@ import { useAtom } from 'jotai';
 import i18n from '../../../../i18n';
 import styles from '../index.module.less';
 import { editorAtom } from '../../../../store';
-import useSaveAs from '../../../../core/file/useSaveAs';
+import useSave from '../../../../core/file/useSave';
 
 const SaveMenuItem = () => {
 	const [editor] = useAtom(editorAtom);
-	const { save } = useSaveAs();
+	const { save } = useSave();
 
 	const onSaveClick = () => {
 		save({ editor });
