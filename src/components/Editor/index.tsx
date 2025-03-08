@@ -6,6 +6,8 @@ import i18n from '../../i18n';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../store';
 import { useEffect } from 'react';
+import FontSize from '@tiptap/extension-font-size';
+import TextStyle from '@tiptap/extension-text-style';
 
 const extensions = [
 	StarterKit,
@@ -17,6 +19,10 @@ const extensions = [
 	Placeholder.configure({
 		placeholder: i18n.t('editor.placeholder'),
 	}),
+	FontSize.configure({
+		types: ['textStyle'],
+	}),
+	TextStyle,
 ];
 
 const content = '';

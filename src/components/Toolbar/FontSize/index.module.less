@@ -1,0 +1,31 @@
+.fontSizeContainer {
+	margin-right: 8px;
+
+	.fontSizeButton {
+		min-width: 65px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.icon {
+			font-size: 12px;
+			margin-left: 4px;
+		}
+	}
+}
+
+.menuItem {
+	padding: 4px 12px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	display: flex;
+	align-items: center;
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.04);
+	}
+
+	.menuText {
+		white-space: nowrap;
+	}
+}
