@@ -1,10 +1,10 @@
-import { Button, Tooltip } from 'antd';
 import { UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../store';
 import styles from './index.module.less';
 import i18n from '../../../i18n';
 import { useCallback, useEffect, useState } from 'react';
+import ToolButton from '../../../components-common/ToolButton';
 
 const History = () => {
 	const [editor] = useAtom(editorAtom);
@@ -56,13 +56,8 @@ const History = () => {
 
 	return (
 		<div className={styles.history}>
-			<Tooltip title={i18n.t('toolbar.undo')}>
-				<Button type="text" icon={<UndoOutlined />} onClick={handleUndo} disabled={!canUndo} className={styles.button} />
-			</Tooltip>
-
-			<Tooltip title={i18n.t('toolbar.redo')}>
-				<Button type="text" icon={<RedoOutlined />} onClick={handleRedo} disabled={!canRedo} className={styles.button} />
-			</Tooltip>
+			<ToolButton tooltip={i18n.t('toolbar.undo')} icon={<UndoOutlined />} disabled={!canUndo} onClick={handleUndo} />
+			<ToolButton tooltip={i18n.t('toolbar.redo')} icon={<RedoOutlined />} disabled={!canRedo} onClick={handleRedo} />
 		</div>
 	);
 };

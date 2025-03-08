@@ -1,18 +1,18 @@
-import { BoldOutlined } from '@ant-design/icons';
+import { StrikethroughOutlined } from '@ant-design/icons';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../store';
 import { useCallback, useEffect, useState } from 'react';
 import i18n from '../../../i18n';
 import ToolButton from '../../../components-common/ToolButton';
 
-const Bold = () => {
+const Strike = () => {
 	const [editor] = useAtom(editorAtom);
 	const [isActive, setIsActive] = useState(false);
 
 	// 更新按钮激活状态
 	const updateActiveState = useCallback(() => {
 		if (!editor) return;
-		setIsActive(editor.isActive('bold'));
+		setIsActive(editor.isActive('strike'));
 	}, [editor]);
 
 	// 监听编辑器状态变化
@@ -32,13 +32,13 @@ const Bold = () => {
 		};
 	}, [editor, updateActiveState]);
 
-	// 切换加粗状态
-	const toggleBold = useCallback(() => {
+	// 切换删除线状态
+	const toggleStrike = useCallback(() => {
 		if (!editor) return;
-		editor.chain().focus().toggleBold().run();
+		editor.chain().focus().toggleStrike().run();
 	}, [editor]);
 
-	return <ToolButton tooltip={i18n.t('toolbar.bold')} icon={<BoldOutlined />} isActive={isActive} onClick={toggleBold} />;
+	return <ToolButton tooltip={i18n.t('toolbar.strike')} icon={<StrikethroughOutlined />} isActive={isActive} onClick={toggleStrike} />;
 };
 
-export default Bold;
+export default Strike;

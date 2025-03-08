@@ -1,9 +1,9 @@
-import { Button, Tooltip } from 'antd';
 import { ItalicOutlined } from '@ant-design/icons';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../store';
 import { useCallback, useEffect, useState } from 'react';
 import i18n from '../../../i18n';
+import ToolButton from '../../../components-common/ToolButton';
 
 const Italic = () => {
 	const [editor] = useAtom(editorAtom);
@@ -38,11 +38,7 @@ const Italic = () => {
 		editor.chain().focus().toggleItalic().run();
 	}, [editor]);
 
-	return (
-		<Tooltip title={i18n.t('toolbar.italic')}>
-			<Button type="text" icon={<ItalicOutlined />} onClick={toggleItalic} className={`tool_button ${isActive ? 'tool_active' : ''}`} />
-		</Tooltip>
-	);
+	return <ToolButton tooltip={i18n.t('toolbar.italic')} icon={<ItalicOutlined />} isActive={isActive} onClick={toggleItalic} />;
 };
 
 export default Italic;

@@ -5,6 +5,7 @@ import Title from './Title';
 import FontSize from './FontSize';
 import Bold from './Bold';
 import Ltalic from './Ltalic';
+import Strike from './Strike';
 
 const Toolbar = () => {
 	return (
@@ -16,6 +17,7 @@ const Toolbar = () => {
 			<FontSize />
 			<Bold />
 			<Ltalic />
+			<Strike />
 		</div>
 	);
 };
