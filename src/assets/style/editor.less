@@ -125,3 +125,23 @@ p.is-editor-empty:first-child::before {
 .ProseMirror:focus {
 	outline: none;
 }
+
+.tool_button {
+	padding: 4px 8px;
+	transition: all 0.3s ease;
+
+	&.tool_active {
+		color: var(--primary-purple);
+		background-color: rgba(146, 84, 222, 0.08);
+	}
+
+	&:hover {
+		color: var(--primary-purple-hover);
+		background-color: rgba(146, 84, 222, 0.08);
+	}
+
+	&:active {
+		color: var(--primary-purple-active);
+		background-color: rgba(126, 87, 194, 0.12);
+	}
+}

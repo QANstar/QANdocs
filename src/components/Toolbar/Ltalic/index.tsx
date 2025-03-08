@@ -1,18 +1,18 @@
 import { Button, Tooltip } from 'antd';
-import { BoldOutlined } from '@ant-design/icons';
+import { ItalicOutlined } from '@ant-design/icons';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../store';
 import { useCallback, useEffect, useState } from 'react';
 import i18n from '../../../i18n';
 
-const Bold = () => {
+const Italic = () => {
 	const [editor] = useAtom(editorAtom);
 	const [isActive, setIsActive] = useState(false);
 
 	// 更新按钮激活状态
 	const updateActiveState = useCallback(() => {
 		if (!editor) return;
-		setIsActive(editor.isActive('bold'));
+		setIsActive(editor.isActive('italic'));
 	}, [editor]);
 
 	// 监听编辑器状态变化
@@ -32,17 +32,17 @@ const Bold = () => {
 		};
 	}, [editor, updateActiveState]);
 
-	// 切换加粗状态
-	const toggleBold = useCallback(() => {
+	// 切换斜体状态
+	const toggleItalic = useCallback(() => {
 		if (!editor) return;
-		editor.chain().focus().toggleBold().run();
+		editor.chain().focus().toggleItalic().run();
 	}, [editor]);
 
 	return (
-		<Tooltip title={i18n.t('toolbar.bold')}>
-			<Button type="text" icon={<BoldOutlined />} onClick={toggleBold} className={`tool_button ${isActive ? 'tool_active' : ''}`} />
+		<Tooltip title={i18n.t('toolbar.italic')}>
+			<Button type="text" icon={<ItalicOutlined />} onClick={toggleItalic} className={`tool_button ${isActive ? 'tool_active' : ''}`} />
 		</Tooltip>
 	);
 };
 
-export default Bold;
+export default Italic;

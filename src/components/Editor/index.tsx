@@ -8,6 +8,7 @@ import { editorAtom } from '../../store';
 import { useEffect } from 'react';
 import FontSize from '@tiptap/extension-font-size';
 import TextStyle from '@tiptap/extension-text-style';
+import Image from '@tiptap/extension-image';
 
 const extensions = [
 	StarterKit,
@@ -23,6 +24,7 @@ const extensions = [
 		types: ['textStyle'],
 	}),
 	TextStyle,
+	Image,
 ];
 
 const content = '';

@@ -4,6 +4,7 @@ import styles from './index.module.less';
 import Title from './Title';
 import FontSize from './FontSize';
 import Bold from './Bold';
+import Ltalic from './Ltalic';
 
 const Toolbar = () => {
 	return (
@@ -14,6 +15,7 @@ const Toolbar = () => {
 			<Divider type="vertical" className={styles.divider} />
 			<FontSize />
 			<Bold />
+			<Ltalic />
 		</div>
 	);
 };
