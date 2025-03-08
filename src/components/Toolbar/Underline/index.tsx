@@ -1,18 +1,18 @@
-import { StrikethroughOutlined } from '@ant-design/icons';
+import { UnderlineOutlined } from '@ant-design/icons';
 import { useAtom } from 'jotai';
 import { editorAtom } from '../../../store';
 import { useCallback, useEffect, useState } from 'react';
 import i18n from '../../../i18n';
 import ToolButton from '../../../components-common/ToolButton';
 
-const Strike = () => {
+const Underline = () => {
 	const [editor] = useAtom(editorAtom);
 	const [isActive, setIsActive] = useState(false);
 
 	// 更新按钮激活状态
 	const updateActiveState = useCallback(() => {
 		if (!editor) return;
-		setIsActive(editor.isActive('strike'));
+		setIsActive(editor.isActive('underline'));
 	}, [editor]);
 
 	// 监听编辑器状态变化
@@ -32,13 +32,13 @@ const Strike = () => {
 		};
 	}, [editor, updateActiveState]);
 
-	// 切换删除线状态
-	const toggleStrike = useCallback(() => {
+	// 切换下划线状态
+	const toggleUnderline = useCallback(() => {
 		if (!editor) return;
-		editor.chain().focus().toggleStrike().run();
+		editor.chain().focus().toggleUnderline().run();
 	}, [editor]);
 
-	return <ToolButton tooltip={i18n.t('toolbar.strikeThrough')} icon={<StrikethroughOutlined />} isActive={isActive} onClick={toggleStrike} />;
+	return <ToolButton tooltip={i18n.t('toolbar.underline')} icon={<UnderlineOutlined />} isActive={isActive} onClick={toggleUnderline} />;
 };
 
-export default Strike;
+export default Underline;

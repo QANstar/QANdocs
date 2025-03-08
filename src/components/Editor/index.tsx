@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import FontSize from '@tiptap/extension-font-size';
 import TextStyle from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
+import Underline from '@tiptap/extension-underline';
 
 const extensions = [
 	StarterKit,
@@ -25,6 +26,7 @@ const extensions = [
 	}),
 	TextStyle,
 	Image,
+	Underline,
 ];
 
 const content = '';
