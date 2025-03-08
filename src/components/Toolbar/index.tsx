@@ -4,7 +4,7 @@ import styles from './index.module.less';
 import Title from './Title';
 import FontSize from './FontSize';
 import Bold from './Bold';
-import Ltalic from './Ltalic';
+import Italic from './Italic';
 import Strike from './Strike';
 import Underline from './Underline';
 
@@ -17,7 +17,7 @@ const Toolbar = () => {
 			<Divider type="vertical" className={styles.divider} />
 			<FontSize />
 			<Bold />
-			<Ltalic />
+			<Italic />
 			<Strike />
 			<Underline />
 		</div>
