@@ -9,5 +9,35 @@
 	},
 	"editor": {
 		"placeholder": "请输入内容"
+	},
+	"toolbar": {
+		"bold": "加粗",
+		"italic": "斜体",
+		"underline": "下划线",
+		"strikeThrough": "删除线",
+		"subscript": "下标",
+		"superscript": "上标",
+		"justifyLeft": "左对齐",
+		"justifyCenter": "居中",
+		"justifyRight": "右对齐",
+		"justifyFull": "两端对齐",
+		"indent": "缩进",
+		"outdent": "减少缩进",
+		"insertUnorderedList": "无序列表",
+		"insertOrderedList": "有序列表",
+		"insertHorizontalRule": "插入水平线",
+		"insertLink": "插入链接",
+		"removeLink": "移除链接",
+		"insertImage": "插入图片",
+		"insertTable": "插入表格",
+		"undo": "撤销",
+		"redo": "恢复",
+		"fontName": "字体",
+		"fontSize": "字号",
+		"formatBlock": "格式",
+		"fontColor": "字体颜色",
+		"fontBackgroundColor": "背景颜色",
+		"save": "保存",
+		"cancel": "取消"
 	}
 }
