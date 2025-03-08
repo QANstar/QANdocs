@@ -21,7 +21,7 @@ const Header = () => {
 
 			<div className={styles.right}>
 				<Button type="text" icon={<SettingOutlined />} className={styles.windowButton} />
-				<Divider type="vertical" className={styles.divider} />
+				<Divider type="vertical" className="divider" />
 				<Button type="text" icon={<MinusOutlined />} onClick={minimize} className={styles.windowButton} />
 				<Button type="text" icon={<BorderOutlined />} onClick={maximize} className={styles.windowButton} />
 				<Button type="text" icon={<CloseOutlined />} onClick={close} className={styles.windowButton} />
