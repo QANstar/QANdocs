@@ -5,6 +5,7 @@ export const presetColors = [
 	'#595959',
 	'#8C8C8C',
 	'#BFBFBF',
+	'#FFFFFF',
 	'#FF4D4F',
 	'#FF7A45',
 	'#FA8C16',
@@ -19,5 +20,8 @@ export const presetColors = [
 	'#F759AB',
 	'#F5222D',
 	'#FA541C',
-	'#FFFFFF',
+	'#880E4F',
+	'#004D40',
+	'#0D47A1',
+	'#C2185B',
 ];

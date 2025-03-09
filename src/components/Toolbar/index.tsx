@@ -22,6 +22,7 @@ const Toolbar = () => {
 			<Strike />
 			<Underline />
 			<FontColor />
+			<Divider type="vertical" className={styles.divider} />
 		</div>
 	);
 };
