@@ -17,6 +17,7 @@
 		"strikeThrough": "删除线",
 		"subscript": "下标",
 		"superscript": "上标",
+		"align": "对齐",
 		"justifyLeft": "左对齐",
 		"justifyCenter": "居中",
 		"justifyRight": "右对齐",

@@ -8,6 +8,7 @@ import Italic from './Italic';
 import Strike from './Strike';
 import Underline from './Underline';
 import FontColor from './FontColor';
+import Align from './Align';
 
 const Toolbar = () => {
 	return (
@@ -23,6 +24,7 @@ const Toolbar = () => {
 			<Underline />
 			<FontColor />
 			<Divider type="vertical" className={styles.divider} />
+			<Align />
 		</div>
 	);
 };

@@ -11,6 +11,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
 import Color from '@tiptap/extension-color';
+import TextAlign from '@tiptap/extension-text-align';
 
 const extensions = [
 	StarterKit,
@@ -29,6 +30,11 @@ const extensions = [
 	Image,
 	Underline,
 	Color,
+	TextAlign.configure({
+		types: ['heading', 'paragraph'],
+		alignments: ['left', 'center', 'right', 'justify'],
+		defaultAlignment: 'left',
+	}),
 ];
 
 const content = '';
