@@ -10,6 +10,7 @@ import FontSize from '@tiptap/extension-font-size';
 import TextStyle from '@tiptap/extension-text-style';
 import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
+import Color from '@tiptap/extension-color';
 
 const extensions = [
 	StarterKit,
@@ -27,6 +28,7 @@ const extensions = [
 	TextStyle,
 	Image,
 	Underline,
+	Color,
 ];
 
 const content = '';

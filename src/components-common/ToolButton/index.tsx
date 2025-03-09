@@ -7,7 +7,7 @@ interface IToolButtonProps {
 	icon?: ReactNode;
 	isActive?: boolean;
 	disabled?: boolean;
-	onClick: () => void;
+	onClick?: () => void;
 }
 
 const ToolButton = (props: IToolButtonProps) => {

@@ -7,6 +7,7 @@ import Bold from './Bold';
 import Italic from './Italic';
 import Strike from './Strike';
 import Underline from './Underline';
+import FontColor from './FontColor';
 
 const Toolbar = () => {
 	return (
@@ -20,6 +21,7 @@ const Toolbar = () => {
 			<Italic />
 			<Strike />
 			<Underline />
+			<FontColor />
 		</div>
 	);
 };

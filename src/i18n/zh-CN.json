@@ -36,6 +36,7 @@
 		"fontSize": "字号",
 		"formatBlock": "格式",
 		"fontColor": "字体颜色",
+		"commonColors": "常用颜色",
 		"fontBackgroundColor": "背景颜色",
 		"save": "保存",
 		"cancel": "取消",
