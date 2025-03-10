@@ -9,6 +9,8 @@ import Strike from './Strike';
 import Underline from './Underline';
 import FontColor from './FontColor';
 import Align from './Align';
+import BulletList from './BulletList';
+import OrderedList from './OrderedList';
 
 const Toolbar = () => {
 	return (
@@ -25,6 +27,8 @@ const Toolbar = () => {
 			<FontColor />
 			<Divider type="vertical" className={styles.divider} />
 			<Align />
+			<BulletList />
+			<OrderedList />
 		</div>
 	);
 };
