@@ -12,6 +12,10 @@ import Image from '@tiptap/extension-image';
 import Underline from '@tiptap/extension-underline';
 import Color from '@tiptap/extension-color';
 import TextAlign from '@tiptap/extension-text-align';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 
 const extensions = [
 	StarterKit,
@@ -27,7 +31,9 @@ const extensions = [
 		types: ['textStyle'],
 	}),
 	TextStyle,
-	Image,
+	Image.configure({
+		allowBase64: true,
+	}),
 	Underline,
 	Color,
 	TextAlign.configure({
@@ -35,6 +41,12 @@ const extensions = [
 		alignments: ['left', 'center', 'right', 'justify'],
 		defaultAlignment: 'left',
 	}),
+	Table.configure({
+		resizable: true,
+	}),
+	TableRow,
+	TableHeader,
+	TableCell,
 ];
 
 const content = '';
