@@ -11,6 +11,7 @@ import FontColor from './FontColor';
 import Align from './Align';
 import BulletList from './BulletList';
 import OrderedList from './OrderedList';
+import MoreMenu from './MoreMenu';
 
 const Toolbar = () => {
 	return (
@@ -29,6 +30,8 @@ const Toolbar = () => {
 			<Align />
 			<BulletList />
 			<OrderedList />
+			<Divider type="vertical" className={styles.divider} />
+			<MoreMenu />
 		</div>
 	);
 };
