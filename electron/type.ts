@@ -35,8 +35,15 @@ export interface IFileOpenResult {
 	error?: string;
 }
 
+export interface IReadImgResult {
+	success: boolean;
+	data?: string;
+	error?: string;
+}
+
 export interface IFileApi {
 	saveAs: (options: IFileSaveAsOptions) => Promise<IFileSaveAsResult>;
 	save: (options: IFileSaveOptions) => Promise<IFileSaveResult>;
 	open: () => Promise<IFileOpenResult>;
+	readImg: (path: string) => Promise<IReadImgResult>;
 }

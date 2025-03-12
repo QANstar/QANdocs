@@ -84,6 +84,16 @@ const setupFileExtension = () => {
 			return { success: false, error: String(error) };
 		}
 	});
+
+	ipcMain.handle('read-image-file', async (_, path) => {
+		try {
+			const data = await fs.readFile(path, { encoding: 'base64' });
+			return { success: true, data: `data:image/png;base64,${data}` };
+		} catch (error) {
+			console.error('读取图片文件失败:', error);
+			return { success: false, error: String(error) };
+		}
+	});
 };
 
 export default setupFileExtension;

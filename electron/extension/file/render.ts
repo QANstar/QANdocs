@@ -21,6 +21,9 @@ const frameApi: IFileApi = {
 	open: async () => {
 		return await ipcRenderer.invoke('open-document');
 	},
+	readImg: async (path: string) => {
+		return await ipcRenderer.invoke('read-image-file', path);
+	},
 };
 
 // 窗口控制相关功能

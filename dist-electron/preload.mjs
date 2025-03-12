@@ -33,6 +33,9 @@ const frameApi = {
   },
   open: async () => {
     return await electron.ipcRenderer.invoke("open-document");
+  },
+  readImg: async (path) => {
+    return await electron.ipcRenderer.invoke("read-image-file", path);
   }
 };
 electron.contextBridge.exposeInMainWorld("ipcRenderer", {
