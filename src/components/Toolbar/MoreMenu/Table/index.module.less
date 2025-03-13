@@ -1,0 +1,41 @@
+.menuContainer {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	padding: 8px;
+	z-index: 100;
+}
+
+.grid {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.row {
+	display: flex;
+	gap: 2px;
+}
+
+.cell {
+	width: 16px;
+	height: 16px;
+	background-color: #f0f0f0;
+	border: 1px solid #e0e0e0;
+	cursor: pointer;
+
+	&.active {
+		background-color: #c2e0ff;
+		border-color: #8cc7ff;
+	}
+}
+
+.size {
+	margin-top: 8px;
+	text-align: center;
+	font-size: 12px;
+	color: #666;
+}

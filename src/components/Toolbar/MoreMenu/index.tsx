@@ -3,6 +3,7 @@ import ToolButton from '../../../components-common/ToolButton';
 import i18n from '../../../i18n';
 import { Dropdown, MenuProps } from 'antd';
 import Picture from './Picture';
+import Table from './Table';
 
 const items: MenuProps['items'] = [
 	{
@@ -13,7 +14,7 @@ const items: MenuProps['items'] = [
 	{
 		key: 'table',
 		icon: <TableOutlined />,
-		label: i18n.t('toolbar.table'),
+		label: <Table />,
 	},
 ];
 
