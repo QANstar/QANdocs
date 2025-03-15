@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import setupFrameExtension from './extension/frame/client';
 import setupFileExtension from './extension/file/client';
+import { registerDevtoolsHotkey } from './hotley/devtools';
 
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,6 +34,7 @@ function createWindow() {
 		icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.mjs'),
+			devTools: true,
 		},
 		frame: false,
 		width: 800,
@@ -76,4 +78,5 @@ app.whenReady().then(() => {
 	createWindow();
 	setupFrameExtension();
 	setupFileExtension();
+	win && registerDevtoolsHotkey(win);
 });

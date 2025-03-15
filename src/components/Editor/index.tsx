@@ -67,14 +67,14 @@ const Editor = () => {
 	useEffect(() => {
 		if (editor) {
 			setEditor(editor);
-			loadSaveFile();
+			loadSaveFile(editor);
 		}
 
 		// 在组件卸载时，清除全局编辑器引用
 		return () => {
 			setEditor(null);
 		};
-	}, [editor, loadSaveFile, setEditor]);
+	}, []);
 
 	return (
 		<div>
