@@ -8,14 +8,14 @@ const frameApi: IFileApi = {
 		const { defaultPath, fileData, fileName } = options;
 		return await ipcRenderer.invoke('saveas-document', {
 			defaultPath: defaultPath || `${fileName}.${fileSuffix}`,
-			fileData: JSON.stringify(fileData),
+			fileData: fileData,
 		});
 	},
 	save: async (options: IFileSaveOptions) => {
 		const { fileData, path } = options;
 		return await ipcRenderer.invoke('save-document', {
 			path,
-			fileData: JSON.stringify(fileData),
+			fileData: fileData,
 		});
 	},
 	open: async () => {
@@ -23,6 +23,12 @@ const frameApi: IFileApi = {
 	},
 	readImg: async (path: string) => {
 		return await ipcRenderer.invoke('read-image-file', path);
+	},
+	readFile: async (path: string) => {
+		return await ipcRenderer.invoke('read-qd-file', path);
+	},
+	getEntranceInfo: async () => {
+		return await ipcRenderer.invoke('get-entrance-info');
 	},
 };
 

@@ -72,6 +72,11 @@ app.on('activate', () => {
 	}
 });
 
+app.on('open-file', (event, filePath) => {
+	event.preventDefault();
+	console.log('open-file', filePath);
+});
+
 app.whenReady().then(() => {
 	createWindow();
 	setupFrameExtension();

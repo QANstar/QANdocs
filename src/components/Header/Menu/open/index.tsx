@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai';
 import useSave from '../../../../core/file/useSave';
 import i18n from '../../../../i18n';
-import { ISaveData } from '../../../../types/file';
 import styles from '../index.module.less';
 import { editorAtom } from '../../../../store';
 
@@ -11,9 +10,10 @@ const OpenMenuItem = () => {
 
 	const onOpenClick = async () => {
 		const result = await open();
-		const { content } = JSON.parse(result) as ISaveData;
-
-		editor?.commands.setContent(content);
+		if (result) {
+			const { content } = result;
+			editor?.commands.setContent(content);
+		}
 	};
 
 	return (

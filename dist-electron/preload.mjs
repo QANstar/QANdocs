@@ -21,14 +21,14 @@ const frameApi = {
     const { defaultPath, fileData, fileName } = options;
     return await electron.ipcRenderer.invoke("saveas-document", {
       defaultPath: defaultPath || `${fileName}.${fileSuffix}`,
-      fileData: JSON.stringify(fileData)
+      fileData
     });
   },
   save: async (options) => {
     const { fileData, path } = options;
     return await electron.ipcRenderer.invoke("save-document", {
       path,
-      fileData: JSON.stringify(fileData)
+      fileData
     });
   },
   open: async () => {
@@ -36,6 +36,12 @@ const frameApi = {
   },
   readImg: async (path) => {
     return await electron.ipcRenderer.invoke("read-image-file", path);
+  },
+  readFile: async (path) => {
+    return await electron.ipcRenderer.invoke("read-qd-file", path);
+  },
+  getEntranceInfo: async () => {
+    return await electron.ipcRenderer.invoke("get-entrance-info");
   }
 };
 electron.contextBridge.exposeInMainWorld("ipcRenderer", {

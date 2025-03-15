@@ -4,6 +4,7 @@ import { fileNameAtom, filePathAtom } from '../../store/file';
 import { useAtom } from 'jotai';
 import { ISaveData } from '../../types/file';
 import { getFileNameWithoutSuffix } from '../../utils/file';
+import { editorAtom } from '../../store';
 
 interface SaveAsOptions {
 	editor: Editor | null;
@@ -20,6 +21,7 @@ interface SaveOptions {
 const useSave = () => {
 	const [fileName, setFileName] = useAtom(fileNameAtom);
 	const [filePath, setFilePath] = useAtom(filePathAtom);
+	const [editor] = useAtom(editorAtom);
 
 	const getSaveData = useCallback((editor: Editor) => {
 		// 获取编辑器内容
@@ -107,12 +109,25 @@ const useSave = () => {
 		setFileName(newFileName);
 		if (result.path) setFilePath(result.path);
 		if (result.success && result.fileData) {
-			return JSON.parse(result.fileData);
+			return JSON.parse(result.fileData) as ISaveData;
 		}
 		return '';
 	}, [fileName, setFileName, setFilePath]);
 
-	return { saveAs, save, open };
+	const loadSaveFile = useCallback(async () => {
+		const { success, filePath } = await window.electronAPI.file.getEntranceInfo();
+		if (!success || !filePath) return;
+		const result = await window.electronAPI.file.readFile(filePath);
+		const newFileName = getFileNameWithoutSuffix(result.fileName || fileName);
+		setFileName(newFileName);
+		if (result.path) setFilePath(result.path);
+		if (result.success && result.fileData) {
+			const { content } = JSON.parse(result.fileData) as ISaveData;
+			editor?.commands.setContent(content);
+		}
+	}, [editor?.commands, fileName, setFileName, setFilePath]);
+
+	return { saveAs, save, open, loadSaveFile };
 };
 
 export default useSave;

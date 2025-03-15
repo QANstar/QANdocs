@@ -94,6 +94,37 @@ const setupFileExtension = () => {
 			return { success: false, error: String(error) };
 		}
 	});
+
+	ipcMain.handle('read-qd-file', async (_, filePath) => {
+		try {
+			// 读取文件内容
+			const fileContent = await fs.readFile(filePath, 'utf-8');
+
+			return {
+				path: filePath,
+				fileName: path.basename(filePath),
+				success: true,
+				fileData: fileContent,
+			};
+		} catch (error) {
+			console.error('打开文件失败:', error);
+			return { success: false, error: String(error) };
+		}
+	});
+
+	ipcMain.handle('get-entrance-info', () => {
+		try {
+			const args = process.argv.slice(1);
+			const filePath = args.find((arg) => arg.endsWith('.qd'));
+
+			return {
+				filePath,
+				success: true,
+			};
+		} catch (error) {
+			return { success: false, error: String(error) };
+		}
+	});
 };
 
 export default setupFileExtension;

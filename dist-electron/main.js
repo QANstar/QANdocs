@@ -96,6 +96,32 @@ const setupFileExtension = () => {
       return { success: false, error: String(error) };
     }
   });
+  ipcMain.handle("read-qd-file", async (_, filePath) => {
+    try {
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      return {
+        path: filePath,
+        fileName: path.basename(filePath),
+        success: true,
+        fileData: fileContent
+      };
+    } catch (error) {
+      console.error("打开文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("get-entrance-info", () => {
+    try {
+      const args = process.argv.slice(1);
+      const filePath = args.find((arg) => arg.endsWith(".qd"));
+      return {
+        filePath,
+        success: true
+      };
+    } catch (error) {
+      return { success: false, error: String(error) };
+    }
+  });
 };
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -135,6 +161,10 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+app.on("open-file", (event, filePath) => {
+  event.preventDefault();
+  console.log("open-file", filePath);
 });
 app.whenReady().then(() => {
   createWindow();

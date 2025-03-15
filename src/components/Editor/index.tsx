@@ -16,6 +16,7 @@ import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
+import useSave from '../../core/file/useSave';
 
 const extensions = [
 	StarterKit,
@@ -58,6 +59,7 @@ const Editor = () => {
 		content,
 		autofocus: true,
 	});
+	const { loadSaveFile } = useSave();
 
 	const [, setEditor] = useAtom(editorAtom);
 
@@ -65,13 +67,14 @@ const Editor = () => {
 	useEffect(() => {
 		if (editor) {
 			setEditor(editor);
+			loadSaveFile();
 		}
 
 		// 在组件卸载时，清除全局编辑器引用
 		return () => {
 			setEditor(null);
 		};
-	}, [editor, setEditor]);
+	}, [editor, loadSaveFile, setEditor]);
 
 	return (
 		<div>
