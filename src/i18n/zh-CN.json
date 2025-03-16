@@ -5,6 +5,12 @@
 			"save": "保存",
 			"saveAs": "另存为",
 			"open": "打开"
+		},
+		"setting": {
+			"ai": {
+				"title": "模型配置",
+				"apiSelect": "接口"
+			}
 		}
 	},
 	"editor": {
