@@ -8,5 +8,6 @@ module.exports = {
 	rules: {
 		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 		'no-mixed-spaces-and-tabs': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
 	},
 };

@@ -44,6 +44,30 @@ const frameApi = {
     return await electron.ipcRenderer.invoke("get-entrance-info");
   }
 };
+const configApi = {
+  get: async (options) => {
+    const { key } = options;
+    const result = await electron.ipcRenderer.invoke("get-secure-config", key);
+    return {
+      success: true,
+      data: result
+    };
+  },
+  set: async (options) => {
+    const { key, value } = options;
+    const result = await electron.ipcRenderer.invoke("set-secure-config", { key, value });
+    return {
+      success: result.success
+    };
+  },
+  remove: async (options) => {
+    const { key } = options;
+    const result = await electron.ipcRenderer.invoke("delete-secure-config", key);
+    return {
+      success: result.success
+    };
+  }
+};
 electron.contextBridge.exposeInMainWorld("ipcRenderer", {
   on(...args) {
     const [channel, listener] = args;
@@ -66,5 +90,6 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
 });
 electron.contextBridge.exposeInMainWorld("electronAPI", {
   frame: frameApi$1,
-  file: frameApi
+  file: frameApi,
+  config: configApi
 });

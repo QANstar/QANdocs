@@ -1,7 +1,7 @@
-export interface IFrameApi {
-	minimize: () => void;
-	toggleMaximize: () => void;
-	close: () => void;
+export interface IBaseResult<T> {
+	success: boolean;
+	error?: string;
+	data?: T;
 }
 
 export interface IFileSaveAsResult {
@@ -47,6 +47,12 @@ export interface IEntranceInfoResult {
 	error?: string;
 }
 
+export interface IFrameApi {
+	minimize: () => void;
+	toggleMaximize: () => void;
+	close: () => void;
+}
+
 export interface IFileApi {
 	saveAs: (options: IFileSaveAsOptions) => Promise<IFileSaveAsResult>;
 	save: (options: IFileSaveOptions) => Promise<IFileSaveResult>;
@@ -54,4 +60,10 @@ export interface IFileApi {
 	readImg: (path: string) => Promise<IReadImgResult>;
 	readFile: (path: string) => Promise<IFileOpenResult>;
 	getEntranceInfo: () => Promise<IEntranceInfoResult>;
+}
+
+export interface IConfigApi {
+	get: (options: { key: string }) => Promise<IBaseResult<any>>;
+	set: (options: { key: string; value: any }) => Promise<IBaseResult<void>>;
+	remove: (options: { key: string }) => Promise<IBaseResult<void>>;
 }

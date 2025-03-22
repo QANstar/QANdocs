@@ -1,0 +1,1 @@
+export const ENCRYPTION_KEY = 'SADSADHJKSHJKDHJ@#@!HJ#K!@H#@KJN111';
