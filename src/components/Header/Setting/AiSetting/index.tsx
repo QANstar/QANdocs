@@ -28,7 +28,7 @@ const AiSetting = () => {
 
 	return (
 		<div className={styles.setting}>
-			<div className={styles.modelSelect}>
+			<div className={styles.settingItem}>
 				<div className={styles.label}>{i18n.t('header.setting.ai.apiSelect')}：</div>
 				<Select defaultValue={activeApi} onChange={(val) => setActiveApi(val)} style={{ width: 120 }} options={SUPPORTED_API} />
 			</div>

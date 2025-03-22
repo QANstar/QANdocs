@@ -1,135 +1,192 @@
-import { ipcMain as i, BrowserWindow as d, dialog as h, app as u } from "electron";
-import { createRequire as _ } from "node:module";
-import { fileURLToPath as D } from "node:url";
-import o from "node:path";
-import l from "node:fs/promises";
-const P = () => {
-  i.on("window-minimize", () => {
-    const e = d.getFocusedWindow();
-    e && e.minimize();
-  }), i.on("window-maximize", () => {
-    const e = d.getFocusedWindow();
-    e && (e.isMaximized() ? e.unmaximize() : e.maximize());
-  }), i.on("window-close", () => {
-    const e = d.getFocusedWindow();
-    e && e.close();
-  });
-}, c = "qd", E = () => {
-  i.handle("saveas-document", async (e, s) => {
-    const { defaultPath: t, fileData: r } = s;
-    try {
-      const { canceled: a, filePath: f } = await h.showSaveDialog({
-        defaultPath: t,
-        filters: [{ name: "QANdocs", extensions: [c] }],
-        properties: ["createDirectory"]
-      });
-      if (a || !f)
-        return { success: !1 };
-      const m = f.endsWith(`.${c}`) ? f : `${f}.${c}`;
-      return await l.writeFile(m, r, "utf-8"), {
-        success: !0,
-        fileName: o.basename(m),
-        path: m
-      };
-    } catch (a) {
-      return console.error("保存文件失败:", a), { success: !1, error: String(a) };
-    }
-  }), i.handle("save-document", async (e, s) => {
-    const { path: t, fileData: r } = s;
-    try {
-      const a = t.endsWith(`.${c}`) ? t : `${o.basename(t)}.${c}`;
-      return await l.writeFile(a, r, "utf-8"), {
-        success: !0
-      };
-    } catch (a) {
-      return console.error("保存文件失败:", a), { success: !1, error: String(a) };
-    }
-  }), i.handle("open-document", async () => {
-    try {
-      const { canceled: e, filePaths: s } = await h.showOpenDialog({
-        filters: [{ name: "QANdocs", extensions: [c] }],
-        properties: ["openFile"]
-      });
-      if (e || s.length === 0)
-        return { success: !1 };
-      const t = s[0], r = await l.readFile(t, "utf-8");
-      return {
-        path: t,
-        fileName: o.basename(t),
-        success: !0,
-        fileData: r
-      };
-    } catch (e) {
-      return console.error("打开文件失败:", e), { success: !1, error: String(e) };
-    }
-  }), i.handle("read-image-file", async (e, s) => {
-    try {
-      return { success: !0, data: `data:image/png;base64,${await l.readFile(s, { encoding: "base64" })}` };
-    } catch (t) {
-      return console.error("读取图片文件失败:", t), { success: !1, error: String(t) };
-    }
-  }), i.handle("read-qd-file", async (e, s) => {
-    try {
-      const t = await l.readFile(s, "utf-8");
-      return {
-        path: s,
-        fileName: o.basename(s),
-        success: !0,
-        fileData: t
-      };
-    } catch (t) {
-      return console.error("打开文件失败:", t), { success: !1, error: String(t) };
-    }
-  }), i.handle("get-entrance-info", () => {
-    try {
-      return {
-        filePath: process.argv.slice(1).find((t) => t.endsWith(".qd")),
-        success: !0
-      };
-    } catch (e) {
-      return { success: !1, error: String(e) };
+import { ipcMain, BrowserWindow, dialog, app } from "electron";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import fs from "node:fs/promises";
+const setupFrameExtension = () => {
+  ipcMain.on("window-minimize", () => {
+    const win2 = BrowserWindow.getFocusedWindow();
+    if (win2) {
+      win2.minimize();
     }
   });
-}, R = (e) => {
-  e.webContents.on("before-input-event", (s, t) => {
-    if (t.key === "F12" && !t.alt && !t.control && !t.meta && !t.shift) {
-      console.log("F12 按键被捕获");
-      const r = e == null ? void 0 : e.webContents;
-      r && (r.isDevToolsOpened() ? r.closeDevTools() : r.openDevTools({ mode: "detach" })), s.preventDefault();
+  ipcMain.on("window-maximize", () => {
+    const win2 = BrowserWindow.getFocusedWindow();
+    if (win2) {
+      if (win2.isMaximized()) {
+        win2.unmaximize();
+      } else {
+        win2.maximize();
+      }
+    }
+  });
+  ipcMain.on("window-close", () => {
+    const win2 = BrowserWindow.getFocusedWindow();
+    if (win2) {
+      win2.close();
     }
   });
 };
-_(import.meta.url);
-const w = o.dirname(D(import.meta.url));
-process.env.APP_ROOT = o.join(w, "..");
-const p = process.env.VITE_DEV_SERVER_URL, x = o.join(process.env.APP_ROOT, "dist-electron"), g = o.join(process.env.APP_ROOT, "dist");
-process.env.VITE_PUBLIC = p ? o.join(process.env.APP_ROOT, "public") : g;
-let n;
-function v() {
-  n = new d({
-    icon: o.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+const fileSuffix = "qd";
+const setupFileExtension = () => {
+  ipcMain.handle("saveas-document", async (_, args) => {
+    const { defaultPath, fileData } = args;
+    try {
+      const { canceled, filePath } = await dialog.showSaveDialog({
+        defaultPath,
+        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
+        properties: ["createDirectory"]
+      });
+      if (canceled || !filePath) {
+        return { success: false };
+      }
+      const finalPath = filePath.endsWith(`.${fileSuffix}`) ? filePath : `${filePath}.${fileSuffix}`;
+      await fs.writeFile(finalPath, fileData, "utf-8");
+      return {
+        success: true,
+        fileName: path.basename(finalPath),
+        path: finalPath
+      };
+    } catch (error) {
+      console.error("保存文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("save-document", async (_, args) => {
+    const { path: pathName, fileData } = args;
+    try {
+      const finalPath = pathName.endsWith(`.${fileSuffix}`) ? pathName : `${path.basename(pathName)}.${fileSuffix}`;
+      await fs.writeFile(finalPath, fileData, "utf-8");
+      return {
+        success: true
+      };
+    } catch (error) {
+      console.error("保存文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("open-document", async () => {
+    try {
+      const { canceled, filePaths } = await dialog.showOpenDialog({
+        filters: [{ name: "QANdocs", extensions: [fileSuffix] }],
+        properties: ["openFile"]
+      });
+      if (canceled || filePaths.length === 0) {
+        return { success: false };
+      }
+      const filePath = filePaths[0];
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      return {
+        path: filePath,
+        fileName: path.basename(filePath),
+        success: true,
+        fileData: fileContent
+      };
+    } catch (error) {
+      console.error("打开文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("read-image-file", async (_, path2) => {
+    try {
+      const data = await fs.readFile(path2, { encoding: "base64" });
+      return { success: true, data: `data:image/png;base64,${data}` };
+    } catch (error) {
+      console.error("读取图片文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("read-qd-file", async (_, filePath) => {
+    try {
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      return {
+        path: filePath,
+        fileName: path.basename(filePath),
+        success: true,
+        fileData: fileContent
+      };
+    } catch (error) {
+      console.error("打开文件失败:", error);
+      return { success: false, error: String(error) };
+    }
+  });
+  ipcMain.handle("get-entrance-info", () => {
+    try {
+      const args = process.argv.slice(1);
+      const filePath = args.find((arg) => arg.endsWith(".qd"));
+      return {
+        filePath,
+        success: true
+      };
+    } catch (error) {
+      return { success: false, error: String(error) };
+    }
+  });
+};
+const registerDevtoolsHotkey = (win2) => {
+  win2.webContents.on("before-input-event", (event, input) => {
+    if (input.key === "F12" && !input.alt && !input.control && !input.meta && !input.shift) {
+      console.log("F12 按键被捕获");
+      const webContents = win2 == null ? void 0 : win2.webContents;
+      if (webContents) {
+        if (webContents.isDevToolsOpened()) {
+          webContents.closeDevTools();
+        } else {
+          webContents.openDevTools({ mode: "detach" });
+        }
+      }
+      event.preventDefault();
+    }
+  });
+};
+createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+process.env.APP_ROOT = path.join(__dirname, "..");
+const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
+const MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
+const RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
+process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, "public") : RENDERER_DIST;
+let win;
+function createWindow() {
+  win = new BrowserWindow({
+    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     webPreferences: {
-      preload: o.join(w, "preload.mjs"),
-      devTools: !0
+      preload: path.join(__dirname, "preload.mjs"),
+      devTools: true
     },
-    frame: !1,
+    frame: false,
     width: 800,
     height: 1e3
-  }), n.webContents.on("did-finish-load", () => {
-    n == null || n.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  }), p ? n.loadURL(p) : n.loadFile(o.join(g, "index.html")), process.env.NODE_ENV === "development" && n.webContents.openDevTools({ mode: "detach" });
+  });
+  win.webContents.on("did-finish-load", () => {
+    win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
+  });
+  if (VITE_DEV_SERVER_URL) {
+    win.loadURL(VITE_DEV_SERVER_URL);
+  } else {
+    win.loadFile(path.join(RENDERER_DIST, "index.html"));
+  }
+  process.env.NODE_ENV === "development" && win.webContents.openDevTools({ mode: "detach" });
 }
-u.on("window-all-closed", () => {
-  process.platform !== "darwin" && (u.quit(), n = null);
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+    win = null;
+  }
 });
-u.on("activate", () => {
-  d.getAllWindows().length === 0 && v();
+app.on("activate", () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
-u.whenReady().then(() => {
-  v(), P(), E(), n && R(n);
+app.whenReady().then(() => {
+  createWindow();
+  setupFrameExtension();
+  setupFileExtension();
+  win && registerDevtoolsHotkey(win);
 });
 export {
-  x as MAIN_DIST,
-  g as RENDERER_DIST,
-  p as VITE_DEV_SERVER_URL
+  MAIN_DIST,
+  RENDERER_DIST,
+  VITE_DEV_SERVER_URL
 };

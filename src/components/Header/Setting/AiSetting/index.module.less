@@ -1,10 +1,9 @@
 .setting {
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
 }
 
-.modelSelect {
+.settingItem {
 	display: flex;
 	align-items: center;
 }
@@ -13,4 +12,40 @@
 	width: 60px;
 	font-weight: bold;
 	size: 16px;
+}
+
+.settingItem {
+	margin-bottom: 24px;
+
+	.label {
+		font-weight: 500;
+	}
+}
+
+.saveBtnWarp {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 60px;
+}
+
+.saveBtn {
+	width: 120px;
+}
+
+.loadingContainer {
+	display: flex;
+	justify-content: center;
+	padding: 20px 0;
+}
+
+.modelList {
+	width: 100%;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.noModels {
+	color: #999;
+	font-style: italic;
 }
