@@ -9,3 +9,8 @@ export interface IAiSetting {
 	url?: string;
 	model?: string;
 }
+
+export interface ILocalAiConfig {
+	type: AiType;
+	settings: IAiSetting[];
+}

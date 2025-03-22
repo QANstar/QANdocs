@@ -27,5 +27,6 @@ interface Window {
 	electronAPI: {
 		frame: import('./type').IFrameApi;
 		file: import('./type').IFileApi;
+		config: import('./type').IConfigApi;
 	};
 }

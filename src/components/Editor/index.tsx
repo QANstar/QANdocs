@@ -17,6 +17,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import useSave from '../../core/file/useSave';
+import useAiChat from '../../core/ai/useAiChat';
 
 const extensions = [
 	StarterKit,
@@ -60,6 +61,7 @@ const Editor = () => {
 		autofocus: true,
 	});
 	const { loadSaveFile } = useSave();
+	const { init } = useAiChat();
 
 	const [, setEditor] = useAtom(editorAtom);
 
@@ -68,6 +70,7 @@ const Editor = () => {
 		if (editor) {
 			setEditor(editor);
 			loadSaveFile(editor);
+			init();
 		}
 
 		// 在组件卸载时，清除全局编辑器引用

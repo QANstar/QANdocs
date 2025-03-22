@@ -4,16 +4,22 @@ import { useMemo, useState } from 'react';
 import styles from './index.module.less';
 import i18n from '../../../../i18n';
 import DeepSeek from './deepseek';
-import { AiType } from '../../../../types/ai';
+import { AiType, IAiSetting } from '../../../../types/ai';
 import Ollama from './ollama';
+import useAiChat from '../../../../core/ai/useAiChat';
 
 const AiSetting = () => {
-	const [activeApi, setActiveApi] = useState(SUPPORTED_API[0].value);
+	const { aiSetting, editModelConfig } = useAiChat();
+	const [activeApi, setActiveApi] = useState(aiSetting?.type || SUPPORTED_API[0].value);
+
+	const onModelSave = (data: IAiSetting) => {
+		editModelConfig(data);
+	};
 
 	const apiSetting = [
 		{
 			value: AiType.DeepSeek,
-			children: <DeepSeek />,
+			children: <DeepSeek onSave={onModelSave} />,
 		},
 		{
 			value: AiType.Ollama,

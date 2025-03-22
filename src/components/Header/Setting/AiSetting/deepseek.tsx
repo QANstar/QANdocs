@@ -3,22 +3,42 @@ import { Input, Button, message, Spin, Space, Select } from 'antd';
 import i18n from '../../../../i18n';
 import styles from './index.module.less';
 import useDeepSeek from '../../../../core/ai/useDeepSeek';
+import { AiType, IAiSetting } from '../../../../types/ai';
+import useAiLocal from '../../../../core/ai/useAiLocal';
 
-const DeepSeek = () => {
+interface IDeepSeekProps {
+	onSave: (data: IAiSetting) => void;
+}
+
+const DeepSeek = (props: IDeepSeekProps) => {
+	const { onSave } = props;
+	const { aiLocalData, getModelDataWithTypes } = useAiLocal();
 	const { models, initialized, loading, error, initDeepSeek, getModelList } = useDeepSeek();
-	const [apiKey, setApiKey] = useState<string>('');
-	const [selectedModel, setSelectedModel] = useState<string>('');
+	const [modelData, setModelData] = useState<IAiSetting>({ type: AiType.DeepSeek, apiKey: '', model: '' });
 
 	// 保存API Key并获取模型列表
 	const handleSaveApiKey = async () => {
 		// 获取模型列表
-		fetchModelList(apiKey);
+		modelData.apiKey && fetchModelList(modelData.apiKey);
 	};
 
 	// 获取模型列表
 	const fetchModelList = async (key: string) => {
 		initDeepSeek(key);
 		getModelList();
+	};
+
+	const init = async () => {
+		const data = await getModelDataWithTypes(AiType.DeepSeek);
+		if (!data) return;
+		setModelData(data);
+		if (data.apiKey) {
+			fetchModelList(data.apiKey);
+		}
+	};
+
+	const handleSave = () => {
+		onSave(modelData);
 	};
 
 	useEffect(() => {
@@ -28,10 +48,8 @@ const DeepSeek = () => {
 	}, [error]);
 
 	useEffect(() => {
-		if (models.length > 0) {
-			setSelectedModel(models[0].id);
-		}
-	}, [models]);
+		init();
+	}, [aiLocalData]);
 
 	return (
 		<>
@@ -40,8 +58,11 @@ const DeepSeek = () => {
 				<Space>
 					<Input.Password
 						style={{ width: 220 }}
-						value={apiKey}
-						onChange={(e) => setApiKey(e.target.value)}
+						value={modelData.apiKey}
+						onChange={(e) => {
+							modelData.apiKey = e.target.value;
+							setModelData({ ...modelData });
+						}}
 						placeholder={i18n.t('header.setting.ai.apiKeyPlaceholder')}
 					/>
 					<Button type="primary" onClick={handleSaveApiKey}>
@@ -62,8 +83,11 @@ const DeepSeek = () => {
 						<div className={styles.label}>{i18n.t('header.setting.ai.availableModels')}：</div>
 						<Select
 							style={{ width: 200 }}
-							value={selectedModel}
-							onChange={(val) => setSelectedModel(val)}
+							value={modelData.model}
+							onChange={(val) => {
+								modelData.model = val;
+								setModelData({ ...modelData });
+							}}
 							options={models.map((model) => ({
 								value: model.id,
 								label: model.id,
@@ -72,7 +96,7 @@ const DeepSeek = () => {
 					</div>
 
 					<div className={styles.saveBtnWarp}>
-						<Button type="primary" className={styles.saveBtn}>
+						<Button type="primary" onClick={handleSave} className={styles.saveBtn}>
 							{i18n.t('header.setting.ai.save')}
 						</Button>
 					</div>
