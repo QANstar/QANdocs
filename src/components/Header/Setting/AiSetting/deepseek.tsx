@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Input, Button, message, Spin, Space, Select } from 'antd';
 import i18n from '../../../../i18n';
 import styles from './index.module.less';
-import useDeepSeek from '../../../../core/ai/useDeepSeek';
+import useAiChat from '../../../../core/ai/useAiChat.ts';
 import { AiType, IAiSetting } from '../../../../types/ai';
 import useAiLocal from '../../../../core/ai/useAiLocal';
 
@@ -13,7 +13,7 @@ interface IDeepSeekProps {
 const DeepSeek = (props: IDeepSeekProps) => {
 	const { onSave } = props;
 	const { aiLocalData, getModelDataWithTypes } = useAiLocal();
-	const { models, initialized, loading, error, initDeepSeek, getModelList } = useDeepSeek();
+	const { models, initialized, loading, error, init, getModelList } = useAiChat();
 	const [modelData, setModelData] = useState<IAiSetting>({ type: AiType.DeepSeek, apiKey: '', model: '' });
 
 	// 保存API Key并获取模型列表
@@ -24,11 +24,11 @@ const DeepSeek = (props: IDeepSeekProps) => {
 
 	// 获取模型列表
 	const fetchModelList = async (key: string) => {
-		initDeepSeek(key);
+		init({ type: AiType.DeepSeek, apiKey: key });
 		getModelList();
 	};
 
-	const init = async () => {
+	const initModel = async () => {
 		const data = await getModelDataWithTypes(AiType.DeepSeek);
 		if (!data) return;
 		setModelData(data);
@@ -48,7 +48,7 @@ const DeepSeek = (props: IDeepSeekProps) => {
 	}, [error]);
 
 	useEffect(() => {
-		init();
+		initModel();
 	}, [aiLocalData]);
 
 	return (

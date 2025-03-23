@@ -6,10 +6,10 @@ import i18n from '../../../../i18n';
 import DeepSeek from './deepseek';
 import { AiType, IAiSetting } from '../../../../types/ai';
 import Ollama from './ollama';
-import useAiChat from '../../../../core/ai/useAiChat';
+import useAiChatSetting from '../../../../core/ai/useAiChatSetting';
 
 const AiSetting = () => {
-	const { aiSetting, editModelConfig } = useAiChat();
+	const { aiSetting, editModelConfig } = useAiChatSetting();
 	const [activeApi, setActiveApi] = useState(aiSetting?.type || SUPPORTED_API[0].value);
 
 	const onModelSave = (data: IAiSetting) => {

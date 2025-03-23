@@ -17,7 +17,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import useSave from '../../core/file/useSave';
-import useAiChat from '../../core/ai/useAiChat';
+import useAiChatSetting from '../../core/ai/useAiChatSetting';
 
 const extensions = [
 	StarterKit,
@@ -61,7 +61,7 @@ const Editor = () => {
 		autofocus: true,
 	});
 	const { loadSaveFile } = useSave();
-	const { init } = useAiChat();
+	const { init } = useAiChatSetting();
 
 	const [, setEditor] = useAtom(editorAtom);
 

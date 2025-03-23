@@ -3,6 +3,10 @@ export enum AiType {
 	Ollama = 'ollama',
 }
 
+export interface IModel {
+	id: string;
+}
+
 export interface IAiSetting {
 	type: AiType;
 	apiKey?: string;
@@ -13,4 +17,16 @@ export interface IAiSetting {
 export interface ILocalAiConfig {
 	type: AiType;
 	settings: IAiSetting[];
+}
+
+export interface IAiChatModel {
+	info: IAiSetting;
+	edit: (data: IAiSetting) => void;
+	getModelList: () => Promise<IModel[]>;
+}
+
+export interface IOllamaModelInfo {
+	name: string;
+	size: string;
+	modified_at: string;
 }
