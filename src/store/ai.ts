@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
-import { IAiSetting } from '../types/ai';
+import { AiType, IAiSetting } from '../types/ai';
 
-const aiAtom = atom<IAiSetting | null>(null);
+const aiAtom = atom<IAiSetting>({ type: AiType.DeepSeek });
 
 export { aiAtom };

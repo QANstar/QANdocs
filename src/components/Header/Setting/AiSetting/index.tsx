@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { message, Select } from 'antd';
 import { SUPPORTED_API } from './config';
 import { useMemo, useState } from 'react';
 import styles from './index.module.less';
@@ -14,6 +14,7 @@ const AiSetting = () => {
 
 	const onModelSave = (data: IAiSetting) => {
 		editModelConfig(data);
+		message.success(i18n.t('header.setting.ai.saveSuccess'));
 	};
 
 	const apiSetting = [
@@ -23,7 +24,7 @@ const AiSetting = () => {
 		},
 		{
 			value: AiType.Ollama,
-			children: <Ollama />,
+			children: <Ollama onSave={onModelSave} />,
 		},
 	];
 

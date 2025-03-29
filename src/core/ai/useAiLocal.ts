@@ -33,6 +33,7 @@ const useAiLocal = () => {
 		} else {
 			aiLocalData.settings.push(data);
 		}
+		aiLocalData.type = data.type;
 		setAiLocalData({ ...aiLocalData });
 		setLocalData(aiLocalData);
 	};

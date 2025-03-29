@@ -13,15 +13,15 @@
 				"modelSelect": "模型",
 				"url": "URL",
 				"apiKey": "apiKey",
-				"apiKeyRequired": "请输入API密钥",
-				"apiKeySaved": "API密钥已保存",
 				"initFailed": "初始化失败，请检查API密钥",
 				"getModelsFailed": "获取模型列表失败",
 				"availableModels": "模型",
 				"noModelsAvailable": "无可用模型",
 				"apiKeyPlaceholder": "请输入API密钥",
+				"urlPlaceholder": "请输入API URL",
 				"confirm": "确认",
-				"save": "保存"
+				"save": "保存",
+				"saveSuccess": "保存成功"
 			}
 		}
 	},
