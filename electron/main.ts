@@ -38,7 +38,7 @@ function createWindow() {
 			devTools: true,
 		},
 		frame: false,
-		width: 800,
+		width: 1400,
 		height: 1000,
 	});
 

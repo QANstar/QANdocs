@@ -3,4 +3,6 @@ import { AiType, IAiSetting } from '../types/ai';
 
 const aiAtom = atom<IAiSetting>({ type: AiType.DeepSeek });
 
-export { aiAtom };
+const chatMessagesAtom = atom([]);
+
+export { aiAtom, chatMessagesAtom };
