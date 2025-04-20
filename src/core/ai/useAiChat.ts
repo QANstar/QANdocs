@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import i18n from '../../i18n';
-import { IAiChatModel, IAiSetting, IModel } from '../../types/ai';
+import { IAiChatModel, IAiSetting, IChatMessage, IModel } from '../../types/ai';
 import AiManager from './AiManager';
 
 const useAiChat = () => {
@@ -9,6 +9,7 @@ const useAiChat = () => {
 	const [models, setModels] = useState<IModel[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>('');
+	const [messages, setMessages] = useState<IChatMessage[]>([]);
 
 	const init = (options: IAiSetting) => {
 		setError('');
@@ -42,6 +43,7 @@ const useAiChat = () => {
 		error,
 		loading,
 		models,
+		messages,
 		init,
 		getModelList,
 	};

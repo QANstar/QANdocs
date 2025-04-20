@@ -23,10 +23,38 @@ export interface IAiChatModel {
 	info: IAiSetting;
 	edit: (data: IAiSetting) => void;
 	getModelList: () => Promise<IModel[]>;
+	chat: (messages: IAiChatMessage[]) => Promise<string>;
 }
 
 export interface IOllamaModelInfo {
 	name: string;
 	size: string;
 	modified_at: string;
+}
+
+export enum ChatRole {
+	USER = 'user',
+	ASSISTANT = 'assistant',
+}
+
+export enum ChatMessageType {
+	NORMAL = 'normal', // 普通消息
+	REFERENCE = 'reference', // 引用原文
+}
+
+export interface IAiChatMessage {
+	role: ChatRole;
+	content: string;
+}
+
+export interface IChatMessage extends IAiChatMessage {
+	type: ChatMessageType;
+}
+
+export interface IOllamaChatResponse {
+	message: {
+		role: string;
+		content: string;
+	};
+	done: boolean;
 }
