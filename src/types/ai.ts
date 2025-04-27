@@ -49,6 +49,7 @@ export interface IAiChatMessage {
 
 export interface IChatMessage extends IAiChatMessage {
 	type: ChatMessageType;
+	id: string;
 }
 
 export interface IOllamaChatResponse {

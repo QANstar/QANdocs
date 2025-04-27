@@ -1,33 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.less';
-
-interface Message {
-	id: number;
-	text: string;
-	isUser: boolean;
-}
+import useAiChat from '../../core/ai/useAiChat';
+import { useAtom } from 'jotai';
+import { aiAtom } from '../../store/ai';
+import { ChatRole } from '../../types/ai';
 
 const AiChat = () => {
-	const [messages, setMessages] = useState<Message[]>([]);
+	const { messages, chat, reset, init } = useAiChat();
 	const [input, setInput] = useState('');
-	const [useText, setUseText] = useState(false);
+	const [aiSetting] = useAtom(aiAtom);
 
 	const sendMessage = () => {
 		if (!input.trim()) return;
-
-		const newUserMessage: Message = { id: Date.now(), text: input.trim(), isUser: true };
-		setMessages([...messages, newUserMessage]);
+		chat(input);
 		setInput('');
-		simulateAiResponse(input.trim());
-	};
-
-	const simulateAiResponse = (userMsg: string) => {
-		// 模拟 AI 响应，真实项目中可替换为调用后端 API
-		setTimeout(() => {
-			const responseText = useText ? `AI 回答（使用本文）：${userMsg}` : `AI 回答：${userMsg}`;
-			const newAiMessage: Message = { id: Date.now(), text: responseText, isUser: false };
-			setMessages((prev) => [...prev, newAiMessage]);
-		}, 1000);
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,27 +22,24 @@ const AiChat = () => {
 		}
 	};
 
-	const toggleUseText = () => {
-		setUseText((prev) => !prev);
+	const resetConversation = () => {
+		reset();
 	};
 
-	const resetConversation = () => {
-		setMessages([]);
-	};
+	useEffect(() => {
+		init(aiSetting);
+	}, [aiSetting]);
 
 	return (
 		<div className={styles.aiChat}>
 			<div className={styles.messagesContainer}>
 				{messages.map((message) => (
-					<div key={message.id} className={`${styles.message} ${message.isUser ? styles.userMessage : styles.aiMessage}`}>
-						{message.text}
+					<div key={message.id} className={`${styles.message} ${message.role === ChatRole.USER ? styles.userMessage : styles.aiMessage}`}>
+						{message.content}
 					</div>
 				))}
 			</div>
 			<div className={styles.header}>
-				<button className={`${styles.toggleButton} ${useText ? styles.toggleOn : styles.toggleOff}`} onClick={toggleUseText}>
-					{useText ? '关闭 使用本文' : '开启 使用本文'}
-				</button>
 				<button className={styles.resetButton} onClick={resetConversation}>
 					重置对话
 				</button>
