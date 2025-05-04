@@ -1,0 +1,33 @@
+.chatItem {
+	:global {
+		.ProseMirror {
+			margin: 0;
+			padding: 0;
+			min-height: unset;
+			outline: none;
+			color: inherit;
+
+			p {
+				margin: 0;
+				padding: 0;
+				color: inherit;
+			}
+
+			/* 所有元素继承颜色 */
+			*,
+			*::before,
+			*::after {
+				color: inherit;
+			}
+
+			/* 移除首个和最后元素的边距 */
+			> :first-child {
+				margin-top: 0;
+			}
+
+			> :last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

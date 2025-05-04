@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { aiAtom } from '../../store/ai';
 import { ChatRole } from '../../types/ai';
 import i18n from '../../i18n';
+import ChatItem from './ChatItem';
 
 const AiChat = () => {
 	const { messages, chat, reset, init } = useAiChat();
@@ -37,7 +38,9 @@ const AiChat = () => {
 			<div className={styles.messagesContainer}>
 				{messages.map((message) => (
 					<div key={message.id} className={`${styles.messageWarp} ${message.role === ChatRole.USER ? styles.userMessageWarp : styles.aiMessageWarp}`}>
-						<div className={`${styles.message} ${message.role === ChatRole.USER ? styles.userMessage : styles.aiMessage}`}>{message.content}</div>
+						<div className={`${styles.message} ${message.role === ChatRole.USER ? styles.userMessage : styles.aiMessage}`}>
+							<ChatItem content={message.content} />
+						</div>
 					</div>
 				))}
 			</div>
