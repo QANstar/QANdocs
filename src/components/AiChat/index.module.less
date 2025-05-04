@@ -1,7 +1,7 @@
 .aiChat {
 	display: flex;
 	flex-direction: column;
-	width: 350px;
+	width: 450px;
 	height: 100%;
 	margin: 0 auto;
 	background: #f8f9fa; // 更柔和的背景色
@@ -87,7 +87,6 @@
 }
 
 .message {
-	max-width: 70%;
 	padding: 12px 16px;
 	margin-bottom: 15px;
 	border-radius: 20px;
@@ -95,20 +94,32 @@
 	word-wrap: break-word;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // 减少阴影
 	font-size: 12px;
+	max-width: 80%;
 }
 
 .userMessage {
 	background: #8a7a9b; // 更柔和的紫色
 	color: #fff;
-	margin-left: auto;
 	border-bottom-right-radius: 0;
 }
 
 .aiMessage {
 	background: #f6f3f9; // 更柔和的浅紫色
 	color: #555; // 减小对比度
-	margin-right: auto;
 	border-bottom-left-radius: 0;
+}
+
+.messageWarp {
+	display: flex;
+	align-items: center;
+}
+
+.userMessageWarp {
+	justify-content: flex-end;
+}
+
+.aiMessageWarp {
+	justify-content: flex-start;
 }
 
 .inputContainer {

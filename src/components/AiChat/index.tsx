@@ -36,8 +36,8 @@ const AiChat = () => {
 		<div className={styles.aiChat}>
 			<div className={styles.messagesContainer}>
 				{messages.map((message) => (
-					<div key={message.id} className={`${styles.message} ${message.role === ChatRole.USER ? styles.userMessage : styles.aiMessage}`}>
-						{message.content}
+					<div key={message.id} className={`${styles.messageWarp} ${message.role === ChatRole.USER ? styles.userMessageWarp : styles.aiMessageWarp}`}>
+						<div className={`${styles.message} ${message.role === ChatRole.USER ? styles.userMessage : styles.aiMessage}`}>{message.content}</div>
 					</div>
 				))}
 			</div>
