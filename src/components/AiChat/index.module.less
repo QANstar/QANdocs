@@ -157,12 +157,14 @@
 	transition: background 0.3s, box-shadow 0.3s;
 
 	&:hover {
-		background: #7c6992; // 更柔和的深紫色
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); // 减轻阴影效果
+		background: #7c6992 !important; // 更柔和的深紫色
+		color: #fff !important; // 确保文字颜色为白色
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important; // 减轻阴影效果
 	}
 
 	&:active {
-		background: #6a5980; // 按下时更深的紫色
-		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); // 按下时内阴影效果
+		background: #6a5980 !important; // 按下时更深的紫色
+		color: #fff !important; // 确保文字颜色为白色
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2) !important; // 按下时内阴影效果
 	}
 }

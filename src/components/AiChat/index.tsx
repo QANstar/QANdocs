@@ -6,9 +6,10 @@ import { aiAtom } from '../../store/ai';
 import { ChatRole } from '../../types/ai';
 import i18n from '../../i18n';
 import ChatItem from './ChatItem';
+import { Button } from 'antd';
 
 const AiChat = () => {
-	const { messages, chat, reset, init } = useAiChat();
+	const { messages, chatLoading, chat, reset, init } = useAiChat();
 	const [input, setInput] = useState('');
 	const [aiSetting] = useAtom(aiAtom);
 
@@ -57,7 +58,9 @@ const AiChat = () => {
 					onKeyDown={handleKeyDown}
 					placeholder={i18n.t('aiChat.inputPlaceholder')}
 				/>
-				<button onClick={sendMessage}>{i18n.t('aiChat.send')}</button>
+				<Button loading={chatLoading} onClick={sendMessage}>
+					{i18n.t('aiChat.send')}
+				</Button>
 			</div>
 		</div>
 	);

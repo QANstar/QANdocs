@@ -10,6 +10,8 @@ const useAiLocal = () => {
 		const { success, data } = await window.electronAPI.config.get({ key: LOCAL_KEY });
 		if (!success || !data) return;
 		const aiLocalData = JSON.parse(data) as ILocalAiConfig;
+		console.log('getAiLocalData', aiLocalData);
+
 		setAiLocalData(aiLocalData);
 		return aiLocalData;
 	};

@@ -68,7 +68,7 @@ const useAiChat = () => {
 		} catch (error) {
 			setError(i18n.t('header.setting.ai.chatFailed'));
 		} finally {
-			setLoading(false);
+			setChatLoading(false);
 		}
 	};
 
