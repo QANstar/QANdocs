@@ -4,6 +4,7 @@ import useAiChat from '../../core/ai/useAiChat';
 import { useAtom } from 'jotai';
 import { aiAtom } from '../../store/ai';
 import { ChatRole } from '../../types/ai';
+import i18n from '../../i18n';
 
 const AiChat = () => {
 	const { messages, chat, reset, init } = useAiChat();
@@ -27,6 +28,7 @@ const AiChat = () => {
 	};
 
 	useEffect(() => {
+		if (!aiSetting.apiKey && !aiSetting.url) return;
 		init(aiSetting);
 	}, [aiSetting]);
 
@@ -41,12 +43,18 @@ const AiChat = () => {
 			</div>
 			<div className={styles.header}>
 				<button className={styles.resetButton} onClick={resetConversation}>
-					重置对话
+					{i18n.t('aiChat.resetConversation')}
 				</button>
 			</div>
 			<div className={styles.inputContainer}>
-				<input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="输入消息..." />
-				<button onClick={sendMessage}>发送</button>
+				<input
+					type="text"
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
+					onKeyDown={handleKeyDown}
+					placeholder={i18n.t('aiChat.inputPlaceholder')}
+				/>
+				<button onClick={sendMessage}>{i18n.t('aiChat.send')}</button>
 			</div>
 		</div>
 	);

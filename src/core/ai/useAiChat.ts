@@ -14,9 +14,9 @@ const useAiChat = () => {
 
 	const init = (options: IAiSetting) => {
 		setError('');
-
 		try {
 			setModel(AiManager.createAiChatModel(options));
+			// 使用函数式更新确保我们获得最新状态
 			setInitialized(true);
 		} catch (error) {
 			setError(i18n.t('header.setting.ai.initFailed'));
@@ -86,6 +86,7 @@ const useAiChat = () => {
 		models,
 		messages,
 		chatLoading,
+		model,
 		init,
 		chat,
 		getModelList,

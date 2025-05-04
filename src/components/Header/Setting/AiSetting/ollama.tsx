@@ -13,27 +13,26 @@ interface IOllamaProps {
 const Ollama = (props: IOllamaProps) => {
 	const { onSave } = props;
 	const { aiLocalData, getModelDataWithTypes } = useAiLocal();
-	const { models, initialized, loading, error, init, getModelList } = useAiChat();
+	const { model, models, initialized, loading, error, init, getModelList } = useAiChat();
 	const [modelData, setModelData] = useState<IAiSetting>({ type: AiType.Ollama, url: '', model: '' });
 
 	// 保存API Key并获取模型列表
 	const handleSaveApiKey = async () => {
 		// 获取模型列表
-		modelData.apiKey && fetchModelList(modelData.apiKey);
+		modelData.url && fetchModelList(modelData.url);
 	};
 
 	// 获取模型列表
 	const fetchModelList = async (url: string) => {
 		init({ type: AiType.Ollama, url });
-		getModelList();
 	};
 
 	const initModel = async () => {
 		const data = await getModelDataWithTypes(AiType.Ollama);
 		if (!data) return;
 		setModelData(data);
-		if (data.apiKey) {
-			fetchModelList(data.apiKey);
+		if (data.url) {
+			fetchModelList(data.url);
 		}
 	};
 
@@ -51,6 +50,12 @@ const Ollama = (props: IOllamaProps) => {
 		initModel();
 	}, [aiLocalData]);
 
+	useEffect(() => {
+		if (model) {
+			getModelList();
+		}
+	}, [model]);
+
 	return (
 		<>
 			<div className={styles.settingItem}>
@@ -58,9 +63,9 @@ const Ollama = (props: IOllamaProps) => {
 				<Space>
 					<Input
 						style={{ width: 220 }}
-						value={modelData.apiKey}
+						value={modelData.url}
 						onChange={(e) => {
-							modelData.apiKey = e.target.value;
+							modelData.url = e.target.value;
 							setModelData({ ...modelData });
 						}}
 						placeholder={i18n.t('header.setting.ai.urlPlaceholder')}

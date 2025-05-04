@@ -13,7 +13,7 @@ interface IDeepSeekProps {
 const DeepSeek = (props: IDeepSeekProps) => {
 	const { onSave } = props;
 	const { aiLocalData, getModelDataWithTypes } = useAiLocal();
-	const { models, initialized, loading, error, init, getModelList } = useAiChat();
+	const { model, models, initialized, loading, error, init, getModelList } = useAiChat();
 	const [modelData, setModelData] = useState<IAiSetting>({ type: AiType.DeepSeek, apiKey: '', model: '' });
 
 	// 保存API Key并获取模型列表
@@ -25,7 +25,6 @@ const DeepSeek = (props: IDeepSeekProps) => {
 	// 获取模型列表
 	const fetchModelList = async (key: string) => {
 		init({ type: AiType.DeepSeek, apiKey: key });
-		getModelList();
 	};
 
 	const initModel = async () => {
@@ -50,6 +49,12 @@ const DeepSeek = (props: IDeepSeekProps) => {
 	useEffect(() => {
 		initModel();
 	}, [aiLocalData]);
+
+	useEffect(() => {
+		if (model) {
+			getModelList();
+		}
+	}, [model]);
 
 	return (
 		<>
