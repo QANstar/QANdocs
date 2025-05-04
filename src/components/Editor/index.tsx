@@ -60,7 +60,7 @@ const Editor = () => {
 		content,
 		autofocus: true,
 	});
-	const { loadSaveFile } = useSave();
+	const { loadSaveFile, save } = useSave(); // 添加save方法
 	const { init } = useAiChatSetting();
 
 	const [, setEditor] = useAtom(editorAtom);
@@ -78,6 +78,29 @@ const Editor = () => {
 			setEditor(null);
 		};
 	}, []);
+
+	// 添加保存快捷键处理
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			// 检测到Ctrl+S或Command+S (macOS)
+			if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+				e.preventDefault(); // 阻止浏览器默认保存行为
+
+				// 触发保存操作
+				if (editor) {
+					save({ editor });
+				}
+			}
+		};
+
+		// 添加全局键盘事件监听器
+		document.addEventListener('keydown', handleKeyDown);
+
+		// 清理函数
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [editor, save]);
 
 	return (
 		<div>

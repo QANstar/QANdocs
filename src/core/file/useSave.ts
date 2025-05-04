@@ -4,6 +4,8 @@ import { fileNameAtom, filePathAtom } from '../../store/file';
 import { useAtom } from 'jotai';
 import { ISaveData } from '../../types/file';
 import { getFileNameWithoutSuffix } from '../../utils/file';
+import { message } from 'antd';
+import i18n from '../../i18n';
 
 interface SaveAsOptions {
 	editor: Editor | null;
@@ -63,6 +65,7 @@ const useSave = () => {
 					const newFileName = getFileNameWithoutSuffix(result.fileName || fileName);
 					setFileName(newFileName);
 					setFilePath(result.path);
+					message.success(i18n.t('header.setting.ai.saveSuccess'));
 					return true;
 				}
 
@@ -93,6 +96,7 @@ const useSave = () => {
 			const result = await window.electronAPI.file.save({ path: filePath, fileData: JSON.stringify(fileData) });
 
 			if (result.success) {
+				message.success(i18n.t('header.setting.ai.saveSuccess'));
 				return true;
 			}
 
